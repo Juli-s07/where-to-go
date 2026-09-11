@@ -1,0 +1,45 @@
+{% extends "places/base.html" %}
+{% load static %}
+
+{% block title %}{{ place.name }}{% endblock %}
+
+{% block content %}
+    <section class="card">
+        <h1>{{ place.name }}</h1>
+        <div class="place-detail">
+            <div class="place-image">
+                <img src="{% static 'places/images/place_image.png' %}" alt="{{ place.name }}">
+            </div>
+            <div class="place-info">
+                <p>
+                    {{ place.description }}
+                </p>
+                <p>
+                    <strong>Type:</strong> {{ place.type }}
+                </p>
+                <p>
+                    <strong>Location:</strong>
+                    {% if place.location %}
+                        {{ place.location }}
+                    {% else %}
+                        Secret place
+                    {% endif %}
+                </p>
+                <p>
+                    <strong>Rating:</strong>
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= place.rating %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Review created:</strong>
+                    {{ place.created_at|date:"d.m.Y" }}
+                </p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
