@@ -229,3 +229,52 @@ footer p {
         flex-basis: auto;
     }
 }
+
+.add-place-card {
+    margin: 0 auto;
+}
+
+.add-place-card h1 {
+    margin-bottom: 2rem;
+}
+
+.add-place-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.add-place-card label {
+    margin-top: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.add-place-card input,
+.add-place-card textarea {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+}
+
+.add-place-card textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.add-place-card input:focus,
+.add-place-card textarea:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+}
+
+.add-place-card button {
+    align-self: center;
+    margin-top: 1.5rem;
+    width: 10rem;
+    padding: 0.9rem 1.5rem;
+}

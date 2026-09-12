@@ -3,8 +3,26 @@
 {% block title %}All places{% endblock %}
 
 {% block content %}
-    <section class="card">
+    <section class="card add-place-card">
         <h1>Discovered a new place? Add it to your list!</h1>
+        <form method="post" action="{% url 'places:add_place' %}">
+            {% csrf_token%}
+            <label for="place-name">Name of the place:</label>
+            <input type="text" id="place-name" name="name" required>
 
+            <label for="place-description">Description:</label>
+            <input type="text" id="place-description" name="description" required>
+
+            <label for="place-type">Type:</label>
+            <input type="text" id="place-type" name="type" required>
+
+            <label for="place-location">Location:</label>
+            <input type="text" id="place-location" name="location">
+
+            <label for="place-rating">Rating:</label>
+            <input type="number" id="place-rating" name="rating" min="1" max="5" required>
+
+            <button type="submit">Add</button>
+        </form>
     </section>
 {% endblock %}
