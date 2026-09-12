@@ -44,6 +44,10 @@ body {
     background: var(--color-surface);
 }
 
+.places-title {
+    margin-bottom: 4rem;
+}
+
 .card p {
     font-size: 1.1rem;
     color: var(--color-text-muted);
@@ -158,10 +162,27 @@ footer p {
     margin: 0;
 }
 
-.place-detail {
+.place-card {
     display: flex;
-    gap: 2rem;
+    flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+    margin-bottom: 5rem;
+}
+
+.title {
+    margin: 0 0 2.5rem;
+}
+
+.title h2 {
+    margin: 0;
+}
+
+.main-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    width: 100%;
 }
 
 .place-image {
@@ -181,23 +202,23 @@ footer p {
     object-fit: cover;
 }
 
-.place-info {
+.place-details {
     flex: 1;
     min-width: 0;
 }
 
-.place-info p {
+.place-details p {
     font-size: 1.05rem;
     color: var(--color-text-muted);
     margin: 0 0 1rem;
 }
 
-.place-info strong {
+.place-details strong {
     color: var(--color-text);
 }
 
 @media (max-width: 640px) {
-    .place-detail {
+    .main-info {
         flex-direction: column;
     }
 
