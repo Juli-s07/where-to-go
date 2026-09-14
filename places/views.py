@@ -17,7 +17,7 @@ def places(request):
     return render(request, "places/places.html", {"places": places})
 
 def add_place_to_session(request, place_data):
-    user_places = get_user_places()
+    user_places = get_user_places(request)
     place_data["id"] = f"user-{len(user_places)}"
     place_data["created_at"] = str(date.today())
     user_places.append(place_data)
@@ -29,7 +29,7 @@ def add_place(request):
             "name": request.POST.get("name"),
             "description": request.POST.get("description"),
             "type": request.POST.get("type"),
-            "location": request.POST.get("location"),
+            "location": request.POST.get("location", "").strip() or "Secret place 👀",
             "rating": int(request.POST.get("rating"))
         }
         add_place_to_session(request, place_data)
