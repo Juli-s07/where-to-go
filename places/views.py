@@ -1,49 +1,49 @@
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import render, redirect
 from datetime import date
+from .default_places import DEFAULT_PLACES
 
 def home(request):
     return render(request, 'places/home.html')
 
-def get_places(request):
-    if 'places' not in request.session:
-        request.session['places'] = []
-    return request.session['places']
+def get_user_places(request):
+    return request.session.get('places', [])
+
+def get_all_places(request):
+    return DEFAULT_PLACES + get_user_places(request)
 
 def places(request):
-    places = [
-        {
-            "id": 1,
-            "name": "Kyiv Coffee Place",
-            "description": "A cozy coffee shop in the center of Kyiv with a warm atmosphere, comfortable seats, and freshly brewed coffee. It is a nice place to meet friends, read a book, or spend a quiet afternoon. The interior is simple and welcoming, and the place is especially pleasant on rainy days.",
-            "type": "Cafe",
-            "location": "Kyiv, Ukraine",
-            "rating": 4,
-            "created_at": date(2026, 9, 11),
-        },
-        {
-            "id": 2,
-            "name": "Secret Garden",
-            "description": "A beautiful and peaceful hidden garden that is perfect for walking, relaxing, and taking a break from the busy city. There are lots of trees and flowers, and the quiet atmosphere makes it a great place to spend time alone or have a calm conversation with a friend. It feels like a small secret escape from the city.",
-            "type": "Park",
-            "location": None,
-            "rating": 5,
-            "created_at": date(2026, 9, 10),
-        },
-    ]
+    places = get_all_places(request)
     return render(request, "places/places.html", {"places": places})
 
+def add_place_to_session(request, place_data):
+    user_places = get_user_places()
+    place_data["id"] = f"user-{len(user_places)}"
+    place_data["created_at"] = str(date.today())
+    user_places.append(place_data)
+    request.session['places'] = user_places
+
 def add_place(request):
-    return render(request, 'places/add_place.html')
+    if request.method == "POST":
+        place_data = {
+            "name": request.POST.get("name"),
+            "description": request.POST.get("description"),
+            "type": request.POST.get("type"),
+            "location": request.POST.get("location"),
+            "rating": int(request.POST.get("rating"))
+        }
+        add_place_to_session(request, place_data)
+        return redirect("places:places")
+    else:
+        return render(request, "places/add_place.html")
 
 def place_full(request, place_id):
-    place = {
-        "id": place_id,
-        "name": "Kyiv Coffee Place",
-        "description": "A cozy coffee shop in the center of Kyiv with a warm atmosphere, comfortable seats, and freshly brewed coffee. It is a nice place to meet friends, read a book, or spend a quiet afternoon. The interior is simple and welcoming, and the place is especially pleasant on rainy days.",
-        "type": "Cafe",
-        "location": "Kyiv, Ukraine",
-        "rating": 4,
-        "created_at": date(2026, 9, 11),
-    }
-
+    places = get_all_places(request)
+    place = None
+    for p in places:
+        if p["id"] == place_id:
+            place = p
+            break
+    if place is None:
+        raise Http404
     return render(request, "places/place_full.html", {"place": place})
