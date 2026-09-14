@@ -2,9 +2,20 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from datetime import date
 from .default_places import DEFAULT_PLACES
+import random
+
+def get_random_place(request):
+    places = get_all_places(request)
+    weights = [place["rating"] for place in places]
+    return random.choices(places, weights=weights, k=1)[0]
+
 
 def home(request):
-    return render(request, 'places/home.html')
+    random_place = None
+    if request.GET.get("random"):
+        random_place = get_random_place(request)
+
+    return render(request, "places/home.html", {"random_place": random_place})
 
 def get_user_places(request):
     return request.session.get('places', [])

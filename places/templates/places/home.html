@@ -9,6 +9,13 @@
             Keep track of your favorite places in Kyiv. <br>
             Add places you love, rate them, and get a random suggestion when you don't know where to go.
         </p>
-        <button class="button-generate">Generate a place</button>
+        <form method="get">
+            <button type="submit" name="random" value="1" class="button-generate">Generate a place</button>
+        </form>
+        {% if random_place %}
+            <div class="random-place">
+                {% include "places/place_content.html" with show_link=True full_description=False place=random_place%}
+            </div>
+        {% endif %}
     </section>
 {% endblock %}
