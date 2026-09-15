@@ -1,5 +1,3 @@
-from datetime import date
-
 DEFAULT_PLACES = [
     {
         "id": "default_1",
@@ -27,5 +25,5 @@ DEFAULT_PLACES = [
         "location": "Khreshchatyi Park, Kyiv",
         "rating": 4,
         "created_at": "2026-09-13",
-    }
+    },
 ]

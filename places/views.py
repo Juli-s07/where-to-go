@@ -1,8 +1,11 @@
-from django.http import Http404
-from django.shortcuts import render, redirect
-from datetime import date
-from .default_places import DEFAULT_PLACES
 import random
+
+from django.http import Http404
+from django.shortcuts import redirect, render
+from django.utils import timezone
+
+from .default_places import DEFAULT_PLACES
+
 
 def get_random_place(request):
     places = get_all_places(request)
@@ -16,22 +19,27 @@ def home(request):
         random_place = get_random_place(request)
     return render(request, "places/home.html", {"random_place": random_place})
 
+
 def get_user_places(request):
-    return request.session.get('places', [])
+    return request.session.get("places", [])
+
 
 def get_all_places(request):
     return DEFAULT_PLACES + get_user_places(request)
+
 
 def places(request):
     places = get_all_places(request)
     return render(request, "places/places.html", {"places": places})
 
+
 def add_place_to_session(request, place_data):
     user_places = get_user_places(request)
     place_data["id"] = f"user-{len(user_places)}"
-    place_data["created_at"] = str(date.today())
+    place_data["created_at"] = str(timezone.localdate())
     user_places.append(place_data)
-    request.session['places'] = user_places
+    request.session["places"] = user_places
+
 
 def add_place(request):
     if request.method == "POST":
@@ -40,12 +48,13 @@ def add_place(request):
             "description": request.POST.get("description"),
             "type": request.POST.get("type"),
             "location": request.POST.get("location", "").strip() or "Secret place 👀",
-            "rating": int(request.POST.get("rating"))
+            "rating": int(request.POST.get("rating")),
         }
         add_place_to_session(request, place_data)
         return redirect("places:places")
     else:
         return render(request, "places/add_place.html")
+
 
 def place_full(request, place_id):
     places = get_all_places(request)

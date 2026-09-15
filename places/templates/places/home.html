@@ -1,12 +1,11 @@
 {% extends "places/base.html" %}
-
 {% block title %}Home{% endblock %}
-
 {% block content %}
     <section class="card">
         <h1>Where should I go today?</h1>
         <p>
-            Keep track of your favorite places. <br>
+            Keep track of your favorite places.
+            <br>
             Add places you love, rate them, and get a random suggestion when you don't know where to go.
         </p>
         <form method="get">
@@ -14,7 +13,7 @@
         </form>
         {% if random_place %}
             <div class="random-place">
-                {% include "places/place_content.html" with show_link=True full_description=False place=random_place%}
+                {% include "places/place_content.html" with show_link=True full_description=False place=random_place %}
             </div>
         {% endif %}
     </section>

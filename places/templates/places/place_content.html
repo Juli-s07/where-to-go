@@ -1,12 +1,9 @@
 {% load static %}
-
 <div class="place-card">
     <div class="title">
         {% if show_link %}
             <h2>
-                <a href="{% url 'places:place_full' place.id %}">
-                    {{ place.name }}
-                </a>
+                <a href="{% url 'places:place_full' place.id %}">{{ place.name }}</a>
             </h2>
         {% else %}
             <h2>{{ place.name }}</h2>
@@ -14,7 +11,8 @@
     </div>
     <div class="main-info">
         <div class="place-image">
-            <img src="{% static 'places/images/place_image.png' %}" alt="{{ place.name }}">
+            <img src="{% static 'places/images/place_image.png' %}"
+                 alt="{{ place.name }}">
         </div>
         <div class="place-info">
             <p>
@@ -40,9 +38,7 @@
                     {% endif %}
                 {% endfor %}
             </p>
-            <p>
-                Review created at {{ place.created_at }}
-            </p>
+            <p>Review created at {{ place.created_at }}</p>
         </div>
     </div>
 </div>
