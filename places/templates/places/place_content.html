@@ -1,0 +1,44 @@
+{% load static %}
+<div class="place-card">
+    <div class="title">
+        {% if show_link %}
+            <h2>
+                <a href="{% url 'places:place_full' place.id %}">{{ place.name }}</a>
+            </h2>
+        {% else %}
+            <h2>{{ place.name }}</h2>
+        {% endif %}
+    </div>
+    <div class="main-info">
+        <div class="place-image">
+            <img src="{% static 'places/images/place_image.png' %}"
+                 alt="{{ place.name }}">
+        </div>
+        <div class="place-info">
+            <p>
+                {% if full_description %}
+                    {{ place.description }}
+                {% else %}
+                    {{ place.description|truncatewords:10 }}
+                {% endif %}
+            </p>
+            <p>
+                <strong>Type:</strong> {{ place.type }}
+            </p>
+            <p>
+                <strong>Location:</strong> {{ place.location }}
+            </p>
+            <p>
+                <strong>Rating:</strong>
+                {% for i in "12345" %}
+                    {% if forloop.counter <= place.rating %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                {% endfor %}
+            </p>
+            <p>Review created at {{ place.created_at }}</p>
+        </div>
+    </div>
+</div>

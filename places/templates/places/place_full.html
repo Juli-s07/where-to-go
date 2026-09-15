@@ -1,0 +1,8 @@
+{% extends "places/base.html" %}
+{% load static %}
+{% block title %}{{ place.name }}{% endblock %}
+{% block content %}
+    <section class="card">
+        {% include "places/place_content.html" with show_link=False full_description=True %}
+    </section>
+{% endblock %}

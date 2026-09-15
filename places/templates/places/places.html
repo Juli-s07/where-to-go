@@ -1,0 +1,14 @@
+{% extends "places/base.html" %}
+{% block title %}All places{% endblock %}
+{% block content %}
+    <section class="card">
+        <h1 class="places-title">See your rated places.</h1>
+        {% if places %}
+            {% for place in places %}
+                {% include "places/place_preview.html" %}
+            {% endfor %}
+        {% else %}
+            <p>Nothing here yet.</p>
+        {% endif %}
+    </section>
+{% endblock %}

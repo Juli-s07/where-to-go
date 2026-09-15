@@ -74,7 +74,7 @@ def run_command(title: str, cmd: list[str]) -> bool:
 
 def process_html_templates(format_mode: bool) -> bool:
     """Run djLint only if HTML files exist, avoiding non-zero exit codes on empty repos."""
-    root = Path("mysite")
+    root = Path(".")
     html_files = [
         p
         for p in root.rglob("*.html")
@@ -142,7 +142,7 @@ def process_static_files(format_mode: bool) -> bool:
     )
     print(f"\n{CYAN}{BOLD}▶ {title}...{RESET}")
 
-    root = Path("mysite")
+    root = Path(".")
     all_files = [
         p
         for p in root.rglob("*")
