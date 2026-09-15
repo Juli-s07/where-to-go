@@ -14,7 +14,6 @@ def home(request):
     random_place = None
     if request.GET.get("random"):
         random_place = get_random_place(request)
-
     return render(request, "places/home.html", {"random_place": random_place})
 
 def get_user_places(request):
